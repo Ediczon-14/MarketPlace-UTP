@@ -39,7 +39,7 @@
         <br>
         <div class="container">
             <div class="row">
-                <div class="col-12 card text-center">
+                <div class="col-12  text-center">
                     <hr>
                     <h1>PRODUCTOS</h1>
                     <a href="javascript: history.go(-1)" class="btn btn-outline-info my-2 my-sm-0">Mas Productos</a>
@@ -59,71 +59,83 @@
                                                         <p class="card-text"><%=a.getNombreProducto()%>-<%=a.getUnidadDeMedida()%></p>
                                                         <p class="card-text"><%=a.getMarcaProducto()%></p>
                                                         <a href="ServletProducto?tipo=getProducto&id=<%=a.getIdProducto()%>" class="btn btn-outline-info my-2 my-sm-0">Ver Detalles</a>
-                                                    </div>
+                                                    </div>  
                                                 </div>
                                             </div>
                         <%
                                         }
                                 }
                         %>
-                        
                         </div>
-                        <form action="ServletCalificacion">
-                            <input type="hidden" name="tipo" value="registrarCalificacion" >
-                            <hr>               
-                            <div class="form-group card">
-                                <h4>Califica la Tienda</h4>
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                                <p class="clasificacion">
-                                    <input id="radio1" type="radio" name="calificacion" value="1">
-                                    <label for="radio1">★</label>
-                                    <input id="radio2" type="radio" name="calificacion" value="2">
-                                    <label for="radio2">★</label>
-                                    <input id="radio3" type="radio" name="calificacion" value="3">
-                                    <label for="radio3">★</label>
-                                    <input id="radio4" type="radio" name="calificacion" value="4">
-                                    <label for="radio4">★</label>
-                                    <input id="radio5" type="radio" name="calificacion" value="5">
-                                    <label for="radio5">★</label>
-                                </p>
-                                <textarea class="form-control" name="comentario" rows="3"></textarea> <br>
+                </div>
+                        <div class="col-12"><hr></div>    
+            </div>
+        </div>
+        <div class="container overflow-hidden">
+            <div class="row">
+                    <div class="col-5">
+                        <div class="form-group card text-center">
+                            <h4>Califica la Tienda</h4><hr>
+                            <form action="ServletCalificacion">
+                                <input type="hidden" name="tipo" value="registrarCalificacion" >
+                                <div>
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                    <p class="clasificacion">
+                                        <input id="radio1" type="radio" name="calificacion" value="1">
+                                        <label for="radio1">★</label>
+                                        <input id="radio2" type="radio" name="calificacion" value="2">
+                                        <label for="radio2">★</label>
+                                        <input id="radio3" type="radio" name="calificacion" value="3">
+                                        <label for="radio3">★</label>
+                                        <input id="radio4" type="radio" name="calificacion" value="4">
+                                        <label for="radio4">★</label>
+                                        <input id="radio5" type="radio" name="calificacion" value="5">
+                                        <label for="radio5">★</label>
+                                    </p>
+                                    <textarea class="form-control" name="comentario" rows="3"></textarea>
+                                    <div style="visibility: hidden">
+                                        <input type="number" value="<jsp:getProperty name="usuarioBean" property ="idUsuario" />" name="idUsuario" required class="form-control" id="exampleFormControlInput1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="fechaCalificacion" required class="form-control" id="fecha" readonly="">
+                                    <script>
+                                        var f = new Date();
+                                        document.getElementById("fecha").value =(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
+                                    </script>
+                                </div>
+
                                 <div style="visibility: hidden">
                                     <input type="number" value="<jsp:getProperty name="usuarioBean" property ="idUsuario" />" name="idUsuario" required class="form-control" id="exampleFormControlInput1">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="fechaCalificacion" required class="form-control" id="fecha" readonly="">
-                                <script>
-                                    var f = new Date();
-                                    document.getElementById("fecha").value =(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
-                                </script>
-                            </div>
-                            
-                            <div style="visibility: hidden">
-                                <input type="number" value="<jsp:getProperty name="usuarioBean" property ="idUsuario" />" name="idUsuario" required class="form-control" id="exampleFormControlInput1">
-                            </div>
-                            
-                            <%
-                                if(da!=null)
-                                {
-                                    for(Producto a:da)
-                                    {
-                            %>
-                                        <div style="visibility: hidden">
-                                            <input type="number" value="<%=a.getIdTienda()%>" name="idTienda" required class="form-control">
-                                        </div
 
-                            <%          break;
+                                <%
+                                    if(da!=null)
+                                    {
+                                        for(Producto a:da)
+                                        {
+                                %>
+                                            <div style="visibility: hidden">
+                                                <input type="number" value="<%=a.getIdTienda()%>" name="idTienda" required class="form-control">
+                                            </div>
+
+                                <%          break;
+                                        }
                                     }
-                                }
-                            %>
-                            <div>
-                                <input type="submit" value="Calificar Tienda" class="btn btn-info form-control">
-                            </div>                            
-                        </form>
-                </div><br><br>    
+                                %>
+                                <div>
+                                    <input type="submit" value="Calificar Tienda" class="btn btn-info form-control">
+                                </div>                           
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="form-group card text-center">
+                            <h4>Comentarios</h4><hr>
+                        </div>
+                    </div>
             </div>
-        </div>
+        </div>                    
         <br> 
         <br>
         <br>
