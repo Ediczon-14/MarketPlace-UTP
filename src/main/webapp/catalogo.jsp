@@ -42,7 +42,7 @@
                 <div class="col-12 card text-center">
                     <hr>
                     <h1>PRODUCTOS</h1>
-                    <a href="javascript: history.go(-2)" class="btn btn-outline-info my-2 my-sm-0">Mas Tiendas</a>
+                    <a href="javascript: history.go(-1)" class="btn btn-outline-info my-2 my-sm-0">Mas Productos</a>
                     <hr>
                         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                         <%

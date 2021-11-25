@@ -107,7 +107,10 @@ public class ServletProducto extends HttpServlet {
                                                                 else if(tipo.equals("buscarPedido"))
                                                                     {
                                                                         buscarPedido(request, response);
-                                                                    }
+                                                                    }else if(tipo.equals("actualizaDetalleProducto"))
+                                                                        {
+                                                                            actualizaDetalleProducto(request, response);
+                                                                        }
     }
     protected void listarProducto(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 
@@ -382,5 +385,27 @@ public class ServletProducto extends HttpServlet {
         //Se reenvia el request(con los datos) al jsp listaCursos.jsp
         request.getRequestDispatcher("/atenderPedido.jsp").forward(request, response);
 
+    }
+    protected void actualizaDetalleProducto(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException
+    {
+        //Se obtiene los parametros}
+        String cantidad = request.getParameter("cantidad");
+        String precio = request.getParameter("precio");
+        String id = request.getParameter("id");
+		
+        //se Crea el objeto cursos
+        DetallePedido a = new DetallePedido();
+        a.setIdDetallePedido(Integer.parseInt(id));
+        a.setCantida(Integer.parseInt(cantidad));
+        a.setPrecio(Double.parseDouble(precio));
+
+        //Se inserta a la BD el cursos
+        ModeloProducto model = new ModeloProducto();
+        model.actualizaDetalleProducto(a);
+
+        //Se lista todos los cursos
+        listarPedidoClienteTienda(request, response);
+				
     }
 }

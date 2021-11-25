@@ -344,7 +344,7 @@ public class ModeloProducto {
         DetallePedido alu = null;
         try 
         {   conn=MysqlDBConexion.getConexion();
-            String sql="select detallepedido.idDetallePedido, detallepedido.cantidad, detallepedido.precio, detallepedido.idProducto, detallepedido.idPedido, producto.nombreProducto, producto.imgProducto from detallepedido inner join producto where detallepedido.idProducto = producto.idProducto and idPedido=?";
+            String sql="select detallepedido.idDetallePedido, detallepedido.cantidad, detallepedido.precio, detallepedido.idProducto, detallepedido.idPedido, producto.nombreProducto, producto.imgProducto, producto.precioProducto from detallepedido inner join producto where detallepedido.idProducto = producto.idProducto and idPedido=?";
             pstm=conn.prepareStatement(sql);
             pstm.setInt(1, idPedido);
             rs=pstm.executeQuery();
@@ -357,6 +357,7 @@ public class ModeloProducto {
                 alu.setIdPedido(rs.getInt("idPedido"));
                 alu.setNombreProducto(rs.getString("nombreProducto"));
                 alu.setImgProducto(rs.getString("imgProducto"));
+                alu.setPrecioProducto(rs.getDouble("precioProducto"));
                 data.add(alu);
             }
         } catch (Exception e) 
@@ -496,6 +497,32 @@ public class ModeloProducto {
                 pstm.setString(8, obj.getFechaEntrega());
                 pstm.setInt(9, obj.getIdTienda());
                 pstm.setInt(10, obj.getIdPedido());
+                salida = pstm.executeUpdate();
+
+        } catch (Exception e) {
+                e.printStackTrace();
+        } finally{
+                try {
+                        if(pstm!= null) pstm.close();
+                        if(conn!= null) conn.close();
+                } catch (Exception e2) {
+                }
+        }
+        return salida;
+    }
+    public int actualizaDetalleProducto(DetallePedido obj)
+    {
+        int salida = -1;
+
+        Connection conn= null;
+        PreparedStatement pstm = null;
+        try {
+                conn = MysqlDBConexion.getConexion();
+                String sql ="update detallepedido set cantidad=?, precio=? where idDetallePedido=?";     
+                pstm = conn.prepareStatement(sql);
+                pstm.setInt(1, obj.getCantida());
+                pstm.setDouble(2, obj.getPrecio());
+                pstm.setInt(3, obj.getIdDetallePedido());
                 salida = pstm.executeUpdate();
 
         } catch (Exception e) {

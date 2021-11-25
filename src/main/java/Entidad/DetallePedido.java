@@ -12,6 +12,7 @@ public class DetallePedido {
     int idPedido;
     int cantida;
     double precio;
+    double precioProducto;
     String imgProducto;
     String nombreProducto;
 
@@ -70,5 +71,14 @@ public class DetallePedido {
     public void setNombreProducto(String nombreProducto) {
         this.nombreProducto = nombreProducto;
     }
+
+    public double getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(double precioProducto) {
+        this.precioProducto = precioProducto;
+    }
+    
     
 }
