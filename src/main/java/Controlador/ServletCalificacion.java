@@ -71,7 +71,7 @@ public class ServletCalificacion extends HttpServlet {
         //Se almacena en memoria llamada request
         request.setAttribute("data",info);
         //Se reenvia el request(con los datos) al jsp listaCursos.jsp
-        request.getRequestDispatcher("productos.jsp").forward(request, response);
+        request.getRequestDispatcher("catalogo.jsp").forward(request, response);
     }
     protected void registrarCalificacion(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 
