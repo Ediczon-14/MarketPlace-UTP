@@ -53,22 +53,29 @@ public class ModeloCalificacion {
         return salida;
     }
     
-    public List<Calificacion> listarCalificacion()
-    {   Calificacion alu=null;
+    public List<Calificacion> listarCalificacion(int idTienda)
+    {   
         List<Calificacion> data=new ArrayList<Calificacion>();
-        Connection cn=null;
-        ResultSet rs=null;
-        PreparedStatement pstm=null;
+        Connection conn= null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Calificacion alu = null;
         try 
-        {   cn=MysqlDBConexion.getConexion();
-            String sql="select * from calificacion";
-            pstm=cn.prepareStatement(sql);
+        {   conn=MysqlDBConexion.getConexion();
+            String sql="select calificacion.idCalificacion, calificacion.calificacion, calificacion.comentario, calificacion.fechaCalificacion, calificacion.idUsuario, calificacion.idTienda, usuario.nombresUsuario, tienda.nombreTienda from calificacion inner join usuario inner JOIN tienda where calificacion.idUsuario = usuario.idUsuario and calificacion.idTienda = tienda.idTienda and calificacion.idTienda=?";
+            pstm=conn.prepareStatement(sql);
+            pstm.setInt(1, idTienda);
             rs=pstm.executeQuery();
             while(rs.next())
             {   alu=new Calificacion();
-                alu.setIdCalificacion(rs.getInt("idCalificacion"));
+                alu.setIdCalificacion(rs.getInt("idCalificacion"));                
                 alu.setCalificacion(rs.getInt("calificacion"));
                 alu.setComentario(rs.getString("comentario"));
+                alu.setFechaCalificacion(rs.getString("fechaCalificacion"));
+                alu.setIdUsuario(rs.getInt("idUsuario"));
+                alu.setIdTienda(rs.getInt("idTienda"));
+                alu.setNombreUsuario(rs.getString("nombresUsuario"));
+                alu.setNombreTienda(rs.getString("nombreTienda"));
                 data.add(alu);
             }
         } catch (Exception e) 
@@ -78,9 +85,8 @@ public class ModeloCalificacion {
         {  try 
             {   if(rs!=null)rs.close();
                 if(pstm!=null)pstm.close();
-                if(cn!=null)cn.close();
-            } catch (Exception e2) 
-                {   e2.printStackTrace();
+                if(conn!=null)conn.close();
+            } catch (Exception e2){
                 }
         }
         return data;

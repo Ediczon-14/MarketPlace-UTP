@@ -55,23 +55,11 @@ public class ServletCalificacion extends HttpServlet {
         String tipo=request.getParameter("tipo");
         if(tipo.equals("listarCalificacion"))
 	{
-            listarCalificacion(request, response);
+            
 	}else if(tipo.equals("registrarCalificacion"))
             {
                 registrarCalificacion(request, response);
             }
-    }
-    protected void listarCalificacion(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException 
-    {
-        //Se obtiene los parametros
-        String id = request.getParameter("id");
-        //Se inserta a la BD el cursos
-        List<Calificacion> info = new ModeloCalificacion().listarCalificacion();
-        //Se almacena en memoria llamada request
-        request.setAttribute("data",info);
-        //Se reenvia el request(con los datos) al jsp listaCursos.jsp
-        request.getRequestDispatcher("catalogo.jsp").forward(request, response);
     }
     protected void registrarCalificacion(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 

@@ -5,10 +5,12 @@
  */
 package Controlador;
 
+import Entidad.Calificacion;
 import Entidad.Categoria;
 import Entidad.DetallePedido;
 import Entidad.Pedido;
 import Entidad.Producto;
+import Modelo.ModeloCalificacion;
 import Modelo.ModeloProducto;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -131,8 +133,10 @@ public class ServletProducto extends HttpServlet {
         String id = request.getParameter("id");
         //Se inserta a la BD el cursos
         List<Producto> info = new ModeloProducto().listarProducto(Integer.parseInt(id));
+        List<Calificacion> info2=new ModeloCalificacion().listarCalificacion(Integer.parseInt(id));
         //Se almacena en memoria llamada request
         request.setAttribute("data",info);
+        request.setAttribute("data2",info2);
         //Se reenvia el request(con los datos) al jsp listaCursos.jsp
         request.getRequestDispatcher("/catalogo.jsp").forward(request, response);
     }

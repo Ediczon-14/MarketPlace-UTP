@@ -12,6 +12,8 @@ public class Calificacion
     String fechaCalificacion;
     int idUsuario;
     int idTienda;
+    String nombreTienda;
+    String nombreUsuario;
 
     public int getIdCalificacion() {
         return idCalificacion;
@@ -60,4 +62,20 @@ public class Calificacion
     public void setIdTienda(int idTienda) {
         this.idTienda = idTienda;
     }
+    public String getNombreTienda() {
+        return nombreTienda;
+    }
+
+    public void setNombreTienda(String nombreTienda) {
+        this.nombreTienda = nombreTienda;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+    
 }
