@@ -3,6 +3,7 @@
     Created on : 04/10/2021, 05:45:04 PM
     Author     : edicz
 --%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="Entidad.Calificacion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,7 +45,25 @@
             <div class="row">
                 <div class="col-9  text-center">
                     <hr>
-                    <h1 class="text-info">PRODUCTOS</h1>
+                    <%
+                        if(da2!=null)
+                            {
+                                String nombreTienda="";
+                                double con=0;
+                                double sum=0;
+                                for(Calificacion b:da2)
+                                    {
+                                        sum=sum+b.getCalificacion();
+                                        con=con+1;
+                                        nombreTienda=b.getNombreTienda();
+                                    }
+                                DecimalFormat formato1 = new DecimalFormat("#.0");
+                    %>
+                    <h1 class="text-info"><%=nombreTienda%> - <%=formato1.format(sum/con)%>★</h1>
+                    <%
+                            }
+                    %>
+                    
                     <a href="javascript: history.go(-1)" class="btn btn-outline-info my-2 my-sm-0">Mas Productos</a>
                     <hr>
                         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
@@ -73,7 +92,7 @@
                 </div>
                 <div class="col-3"><hr><br><br><br><br><hr>
                     <div class="form-group card text-center">
-                        <h4 class="text-info">Califica la Tienda</h4><hr>
+                        <h4 class="text-info">Califica la Tienda</h4>
                         <form action="ServletCalificacion">
                             <input type="hidden" name="tipo" value="registrarCalificacion" >
                             <div>
@@ -90,8 +109,8 @@
                                     <input id="radio5" type="radio" name="calificacion" value="5">
                                     <label for="radio5">★</label>
                                 </p>
-                                <textarea class="form-control" name="comentario" rows="3"></textarea>
-                            </div>
+                                <textarea class="form-control" name="comentario" rows="2"></textarea>
+                            </div><BR>
                             <div class="form-group" style="display:none">
                                 <input type="text" name="fechaCalificacion" required class="form-control" id="fecha" readonly="">
                                 <script>
@@ -121,7 +140,7 @@
                         </form>
                     </div>
                     <div class="form-group card text-center">
-                        <h4 class="text-info">Comentarios</h4><hr>
+                        <h4 class="text-info">Comentarios</h4>
                     <%
                         if(da2!=null)
                             {
@@ -135,7 +154,7 @@
                               <h5 class="card-title"><%=b.getCalificacion()%>★</h5>
                               <p class="card-text"><%=b.getComentario()%></p>
                             </div>
-                            <div class="card-footer bg-transparent border-info">Fecha de Comentario: <%=b.getFechaCalificacion()%></div>
+                            <div class="card-footer bg-transparent border-info"><%=b.getFechaCalificacion()%></div>
                         </div>
                     </div>
                     <%
