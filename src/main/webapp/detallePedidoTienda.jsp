@@ -40,8 +40,7 @@
                             <tr>
                                 <th>CANTIDAD</th>
                                 <th>PRECIO</th>
-                                <th>ID DETALLE PEDIDO</th>
-                                <th>NOMBRE PRODUCTO</th>
+                                <th>MARCA</th>
                                 <th>IMAGEN</th>
                                 <th>ACCION</th>
                         </thead>
@@ -55,13 +54,13 @@
                         <form action="ServletProducto">
                             <input type="hidden" name="tipo" value="actualizaDetalleProducto">    
                             <tr>
+                                <input style="display: none" type="number" name="id" required class="form-control" value="<%=a.getIdDetallePedido()%>">
                                 <td><input type="number" id="cantidad" name="cantidad" required class="form-control" value="<%=a.getCantida()%>"></td>
-                                <td><input type="text" id="precio" readonly="" name="precio" required class="form-control" value="<%=a.getPrecioProducto()*a.getCantida()%>"></td>
+                                <td><input type="text" id="precio" readonly="" name="precio" required class="form-control" value="<%=a.getCantida()*a.getPrecioProducto()%>"></td>
                                 <script>
                                     var s=document.getElementById("cantidad").value;
-                                    document.getElementById("x").value =(<%=a.getPrecioProducto()%>*s);
+                                    document.getElementById("precio").value =(<%=a.getPrecioProducto()%>*s);
                                 </script>
-                                <td><input type="number"  readonly="" name="id" required class="form-control" value="<%=a.getIdDetallePedido()%>"></td>
                                 <td><%=a.getNombreProducto()%></td>
                                 <td><img src="<%=a.getImgProducto()%>" width="50" height="50"></td>
                                 <td><a href="ServletProducto?tipo=eliminarDetallePedido&id=<%=a.getIdDetallePedido()%>" class="btn btn-outline-info my-2 my-sm-0 form-control">Eliminar</a>
@@ -69,13 +68,12 @@
                             </tr>
                         </form>
                         <%
-                                }
                             }
+                        }
                         %>
                         </tbody>
                     </table>
                     <a href="javascript: history.go(-1)"  class="btn btn-outline-info my-2 my-sm-0 form-control">Mostrar Pedidos</a>
-                    
                         <%
                         if(da!=null)
                         {
@@ -92,9 +90,8 @@
                                 <input type="text" name ="total" style="display:none" value="<%=total%>"/>
                                 <input type="text" name ="titulo" style="display:none" value="<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>"/>
                                 <input type="submit" value="Ver Boleta" class="btn btn-outline-info my-2 my-sm-0 form-control"/>
-                                <a href="ServletProducto?tipo=EnviarMail&correo=ediczon.mayta@gmail.com&tienda=<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>" class="btn btn-outline-info">Notificar</a>
                             </form>
-                            
+                            <a href="ServletProducto?tipo=EnviarMail&correo=ediczon.mayta@gmail.com&tienda=<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>" class="btn btn-outline-info">Notificar</a>
                         <%break;
                             }
                         }

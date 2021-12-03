@@ -43,8 +43,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Estado Pedido</label>
-                                            <input type="number" name="idEstadoPedido" required class="form-control" value="<%= a.getIdEstadoPedido()%>">
+                                            <select class="form-control" name="idEstadoPedido">
+                                                <option value="1">Preparando Entrega</option>
+                                                <option value="2">Cancelado</option>
+                                                <option value="3">Enviado</option>
+                                            </select>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label>Metodo de pago</label>
                                             <%
@@ -52,12 +57,12 @@
                                             {
                                                 %>
                                                 <input type="text" readonly="" class="form-control"  value="Efectivo">
-                                                <input type="number" style="visibility: hidden" name="idPago" required class="form-control"  value="<%= a.getIdPago()%>">
+                                                <input type="number" style="display:none" name="idPago" required class="form-control"  value="<%= a.getIdPago()%>">
                                             <%
                                                 }else{
 %>
                                                 <input type="text"  readonly="" class="form-control"  value="Tarjeta">
-                                                <input type="number" style="visibility: hidden" name="idPago" required class="form-control"  value="<%= a.getIdPago()%>">
+                                                <input type="number" style="display:none" name="idPago" required class="form-control"  value="<%= a.getIdPago()%>">
                                             <%
                                                 }
                                             %>
@@ -86,7 +91,7 @@
                                                 <option value="4">Repartidor 3</option>
                                             </select>
                                         </div>
-                                        <div style="visibility: hidden">
+                                        <div style="display:none">
                                             <input type="number" value="<%= a.getIdTienda()%>" name="idTienda"class="form-control form-submit input_pass" >
                                         </div><hr>
                                         <input type="submit" value="enviar" class="btn btn-info form-control" >

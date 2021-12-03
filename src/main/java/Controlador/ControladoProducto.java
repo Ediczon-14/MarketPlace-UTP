@@ -53,7 +53,7 @@ public class ControladoProducto extends HttpServlet {
             case "AgregaCarrito":
                 int pos=0;
                 totalPagar=0.0;
-                cantidad=1;
+                cantidad=Integer.parseInt(request.getParameter("cantidad"));
                 int idProducto=Integer.parseInt(request.getParameter("id"));
                 p=pdao.listarId(idProducto);
                 

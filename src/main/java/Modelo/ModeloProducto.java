@@ -39,7 +39,7 @@ public class ModeloProducto {
             {   alu=new Producto();
                 alu.setIdProducto(rs.getInt("idProducto"));
                 alu.setNombreProducto(rs.getString("nombreProducto"));
-                alu.setPrecioProducto(rs.getInt("precioProducto"));
+                alu.setPrecioProducto(rs.getDouble("precioProducto"));
                 alu.setImgProducto(rs.getString("imgProducto"));
                 alu.setDescripcionProducto(rs.getString("descripcionProducto"));
                 alu.setEstadoProducto(rs.getInt("estadoProducto"));

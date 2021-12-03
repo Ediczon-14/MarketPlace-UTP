@@ -46,7 +46,7 @@ public class CompraDAO {
                 sql="insert into detallepedido(cantidad,precio,idProducto,idPedido)values(?,?,?,?)"; 
                 ps=con.prepareStatement(sql);
                 ps.setInt(1, detalle.getCantidad());
-                ps.setDouble(2, detalle.getPrecioCompra());
+                ps.setDouble(2, detalle.getPrecioCompra()*detalle.getCantidad());
                 ps.setInt(3, detalle.getIdProducto());
                 ps.setInt(4, idPedido);
                 r=ps.executeUpdate();
