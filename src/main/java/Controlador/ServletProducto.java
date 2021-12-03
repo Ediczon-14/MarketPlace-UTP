@@ -15,6 +15,20 @@ import Modelo.ModeloProducto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -112,7 +126,14 @@ public class ServletProducto extends HttpServlet {
                                                                     }else if(tipo.equals("actualizaDetalleProducto"))
                                                                         {
                                                                             actualizaDetalleProducto(request, response);
-                                                                        }
+                                                                        }else if(tipo.equals("EnviarMail"))
+                                                                            {
+                                                                                try {
+                                                                                    EnviarMail(request, response);
+                                                                                } catch (MessagingException ex) {
+                                                                                    Logger.getLogger(ServletProducto.class.getName()).log(Level.SEVERE, null, ex);
+                                                                                }
+                                                                            }
     }
     protected void listarProducto(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 
@@ -412,4 +433,47 @@ public class ServletProducto extends HttpServlet {
         listarPedidoClienteTienda(request, response);
 				
     }
+    protected void EnviarMail(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException, MessagingException
+    {
+        String correo ="ediczon.mayta@gmail.com";
+        String contra="usfptazwtimsvgfl";
+        
+        String correoDestino= request.getParameter("correo");;
+        
+        Properties p = new Properties();
+        p.put("mail.smtp.host", "smtp.gmail.com");
+        p.setProperty("mail.smtp.starttls.enable", "true");
+        p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        p.setProperty("mail.smtp.port", "587");
+        p.setProperty("mail.smtp.user",correo);
+        p.setProperty("mail.smtp.auth", "true");
+        Session s = Session.getDefaultInstance(p);
+        BodyPart texto = new MimeBodyPart();
+        texto.setText("Recibo de Compra");
+        BodyPart adjunto = new MimeBodyPart();
+        
+        adjunto.setDataHandler(new DataHandler(new FileDataSource("D:/reporte.pdf")));
+        adjunto.setFileName("reporte.pdf");
+        MimeMultipart m = new MimeMultipart();
+        m.addBodyPart(texto);
+        m.addBodyPart(adjunto);
+        
+        MimeMessage mensaje = new MimeMessage(s);
+        mensaje.setFrom(new InternetAddress(correo));
+        mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDestino));
+                
+        String tienda = request.getParameter("tienda");
+        
+        mensaje.setSubject(tienda);
+        mensaje.setContent(m);
+            
+        Transport t = s.getTransport("smtp");
+        t.connect(correo,contra);
+        t.sendMessage(mensaje, mensaje.getAllRecipients());
+        t.close();
+        System.out.println("Mensaje enviado");
+        request.getRequestDispatcher("/detallePedidoTienda.jsp").forward(request, response);
+    }
+    
 }

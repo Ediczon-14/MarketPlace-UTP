@@ -45,7 +45,6 @@
                                 <th>DIRECCION DE ENVIO</th>
                                 <th>HORA ENTREGA</th>
                                 <th>FECHA ENTREGA</th>
-                                
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
@@ -71,7 +70,7 @@
                                 <td><%=a.getHoraEntrega()%></td>
                                 <td><%=a.getFechaEntrega()%></td>
                                 <td><a href="ServletProducto?tipo=listarDetallePedidoTienda&id=<%=a.getIdPedido()%>"  class="btn btn-outline-info">Detalles</a>
-                                    <a href="ServletProducto?tipo=buscarPedido&id=<%=a.getIdPedido()%>" class="btn btn-outline-info my-2 my-sm-0">Atender</a></td>
+                                    <a href="ServletProducto?tipo=buscarPedido&id=<%=a.getIdPedido()%>" class="btn btn-outline-info">Atender</a></td>
                             </tr>
                         <%
                                 }

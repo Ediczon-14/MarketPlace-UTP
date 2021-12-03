@@ -5,11 +5,11 @@
  */
 package Controlador;
 
-import Entidad.Distrito;
+
 import Entidad.Tienda;
 import Entidad.Usuario;
 import Modelo.ModeloTienda;
-import Modelo.ModeloUsuario;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,7 +18,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author edicz
@@ -59,7 +60,8 @@ public class ServletTienda extends HttpServlet {
         if(tipo.equals("registrarTienda"))
 	{
             registrarTienda(request, response);
-	}else if(tipo.equals("listarTienda"))
+	}
+        else if(tipo.equals("listarTienda"))
             {
                 listarTienda(request, response);
             }else if(tipo.equals("catalogo"))
@@ -136,5 +138,5 @@ public class ServletTienda extends HttpServlet {
             
         request.getRequestDispatcher("loginVender.jsp").forward(request,response);
     }
-
+    
 }

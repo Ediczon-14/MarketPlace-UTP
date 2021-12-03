@@ -56,10 +56,10 @@
                             <input type="hidden" name="tipo" value="actualizaDetalleProducto">    
                             <tr>
                                 <td><input type="number" id="cantidad" name="cantidad" required class="form-control" value="<%=a.getCantida()%>"></td>
-                                <td><input type="text" id="precio" readonly="" name="precio" required class="form-control"></td>
+                                <td><input type="text" id="precio" readonly="" name="precio" required class="form-control" value="<%=a.getPrecioProducto()*a.getCantida()%>"></td>
                                 <script>
                                     var s=document.getElementById("cantidad").value;
-                                    document.getElementById("precio").value =(<%=a.getPrecioProducto()%>*s);
+                                    document.getElementById("x").value =(<%=a.getPrecioProducto()%>*s);
                                 </script>
                                 <td><input type="number"  readonly="" name="id" required class="form-control" value="<%=a.getIdDetallePedido()%>"></td>
                                 <td><%=a.getNombreProducto()%></td>
@@ -75,7 +75,32 @@
                         </tbody>
                     </table>
                     <a href="javascript: history.go(-1)"  class="btn btn-outline-info my-2 my-sm-0 form-control">Mostrar Pedidos</a>
+                    
+                        <%
+                        if(da!=null)
+                        {
+                            double total=0.0;
+                            for(DetallePedido a:da)
+                            {
+                                total=total+a.getPrecio();
+                            }
+                            for(DetallePedido a:da)
+                            {
+                        %>
+                            <form name="form1" action="pdf.jsp" target="_black">
+                                <input type="text" name ="txtparametro" style="display:none" value="<%=a.getIdPedido()%>"/>
+                                <input type="text" name ="total" style="display:none" value="<%=total%>"/>
+                                <input type="text" name ="titulo" style="display:none" value="<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>"/>
+                                <input type="submit" value="Ver Boleta" class="btn btn-outline-info my-2 my-sm-0 form-control"/>
+                                <a href="ServletProducto?tipo=EnviarMail&correo=ediczon.mayta@gmail.com&tienda=<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>" class="btn btn-outline-info">Notificar</a>
+                            </form>
+                            
+                        <%break;
+                            }
+                        }
+                        %>
                 </div><br><br>
+                
             </div>
         </div>
         <br> 
