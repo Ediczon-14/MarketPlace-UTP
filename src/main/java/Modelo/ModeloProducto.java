@@ -536,4 +536,43 @@ public class ModeloProducto {
         }
         return salida;
     }
+    public List<Producto> buscar(int idTienda,String texto )
+    {   
+        List<Producto> data=new ArrayList<Producto>();
+        Connection conn= null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Producto alu = null;
+        try 
+        {   conn=MysqlDBConexion.getConexion();
+            String sql="select * from producto where idTienda="+idTienda+" and nombreProducto like '%"+texto+"%' or marcaProducto like '%"+texto+"%'";
+            pstm=conn.prepareStatement(sql);
+            rs=pstm.executeQuery();
+            while(rs.next())
+            {   alu=new Producto();
+                alu.setIdProducto(rs.getInt("idProducto"));
+                alu.setNombreProducto(rs.getString("nombreProducto"));
+                alu.setPrecioProducto(rs.getDouble("precioProducto"));
+                alu.setImgProducto(rs.getString("imgProducto"));
+                alu.setDescripcionProducto(rs.getString("descripcionProducto"));
+                alu.setEstadoProducto(rs.getInt("estadoProducto"));
+                alu.setMarcaProducto(rs.getString("marcaProducto"));
+                alu.setUnidadDeMedida(rs.getString("unidadDeMedida"));
+                alu.setIdCategoria(rs.getInt("idCategoria"));
+                alu.setIdTienda(rs.getInt("idTienda"));
+                data.add(alu);
+            }
+        } catch (Exception e) 
+            {   e.printStackTrace();
+            }
+        finally
+        {  try 
+            {   if(rs!=null)rs.close();
+                if(pstm!=null)pstm.close();
+                if(conn!=null)conn.close();
+            } catch (Exception e2){
+                }
+        }
+        return data;
+    }
 }

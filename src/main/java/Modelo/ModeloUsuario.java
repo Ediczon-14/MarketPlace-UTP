@@ -99,7 +99,53 @@ public class ModeloUsuario {
 		}
 		return obj;
     }
-    
+    public Usuario iniciarSesionTienda(int id)
+    {
+		Usuario obj=null;
+		Connection cn=null;
+		ResultSet rs=null;
+		PreparedStatement pstm=null;
+		try 
+                {
+                    String sql="select * from tienda where idTienda=?";
+                    cn=MysqlDBConexion.getConexion();
+                    pstm=cn.prepareStatement(sql);
+                    pstm.setInt(1, id);
+                    rs=pstm.executeQuery();
+                    if(rs.next())
+                    {
+                        obj=new Usuario();
+                        obj.setIdUsuario(rs.getInt(1));
+                        obj.setNombresUsuario(rs.getString(2));
+                        obj.setApellidosUsuario(rs.getString(3));
+                        obj.setTelefonoUsuario(rs.getInt(4));
+                        obj.setCorreoUsuario(rs.getString(5));
+                        obj.setUsuario(rs.getString(6));
+                        obj.setClave(rs.getString(7));
+                        obj.setDniUsuario(rs.getInt(8));
+                        obj.setDireccionUsuario(rs.getString(9));
+                        obj.setIdDistrito(rs.getInt(10));
+                        obj.setIdRol(rs.getInt(11));
+                    }
+		} catch (Exception e) 
+                {
+                    e.printStackTrace();
+		}
+		finally
+                {
+                    try 
+                    {
+                        if(rs!=null)rs.close();
+                        if(pstm!=null)pstm.close();
+                        if(cn!=null)cn.close();
+                    } 
+                    catch (Exception e2) 
+                    {
+                        e2.printStackTrace();
+                    }
+		}
+		return obj;
+    }
     public int insertaUsuario(Usuario obj)
     {
 	int salida = -1;

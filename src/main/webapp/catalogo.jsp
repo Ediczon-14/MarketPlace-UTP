@@ -29,20 +29,15 @@
     
     <body>
         <%@include file="/header.jsp" %>
-        <nav class="navbar navbar-light bg-light">
-            <a class="btn btn-outline-info my-2 my-sm-0" href="ServletProducto?tipo=listarPedidoCliente&id=<jsp:getProperty name="usuarioBean" property ="idUsuario" />">Historial de Compras</a>
-            <a class="btn btn-outline-info my-2 my-sm-0" href="ControladoProducto?accion=Carrito">Carrito <i class="fas fa-cart-plus">(<label style="color: orange">${contador}</label>)</i><img src="img/carrito.png"></a>
-            <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar Producto</button>
-            </form>
-            
-        </nav>
-        <br> 
-        <br>
-        <br>
+        
+        
         <div class="container">
+            <nav class="navbar navbar-light bg-light">
+                <a class="btn btn-outline-info my-2 my-sm-0" href="ServletProducto?tipo=listarPedidoCliente&id=<jsp:getProperty name="usuarioBean" property ="idUsuario" />">Historial de Compras</a>
+                <a class="btn btn-outline-info my-2 my-sm-0" href="ControladoProducto?accion=Carrito">Carrito <i class="fas fa-cart-plus">(<label style="color: orange">${contador}</label>)</i><img src="img/carrito.png"></a>             
+            </nav>
             <div class="row">
+                
                 <div class="col-9  text-center">
                     <hr>
                     <%
@@ -63,8 +58,26 @@
                     <%
                             }
                     %>
-                    
-                    <a href="javascript: history.go(-1)" class="btn btn-outline-info my-2 my-sm-0">Mas Productos</a>
+                    <hr>
+                    <div class="navbar text-right">
+                        <a style="visibility: hidden">#</a>
+                        <form action="ServletProducto" class="form-inline">
+                            <input type="hidden" style="display: none" name="tipo" value="buscar">
+                            <%
+                                if(da!=null)
+                                {
+                                    for(Producto a:da)
+                                    {
+                            %>
+                                        <input type="number" style="display: none" value="<%=a.getIdTienda()%>" name="id" required class="form-control">
+                            <%          break;
+                                    }
+                                }
+                            %>
+                            <input type="search" name="txtBuscar" class="form-control">                            
+                            <input type="submit" value="Buscar Producto" class="btn btn-info form-control" >
+                        </form>
+                    </div>
                     <hr>
                         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                         <%
@@ -88,7 +101,8 @@
                                         }
                                 }
                         %>
-                        </div>
+                        </div><br>
+                        <a href="javascript: history.go(-1)" class="btn btn-outline-info my-2 my-sm-0">Mas Productos</a>
                 </div>
                 <div class="col-3"><hr><br><br><br><br><hr>
                     <div class="form-group card text-center">

@@ -115,7 +115,10 @@ public class ServletProducto extends HttpServlet {
                                                                         }else if(tipo.equals("listarReporte"))
                                                                             {
                                                                                 listarReporte(request, response);
-                                                                            }
+                                                                            }else if(tipo.equals("buscar"))
+                                                                                {
+                                                                                    buscar(request, response);
+                                                                                }
     }
     protected void listarProducto(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 
@@ -404,6 +407,30 @@ public class ServletProducto extends HttpServlet {
         //Se reenvia el request(con los datos) al jsp listaCursos.jsp
         request.getRequestDispatcher("/atenderPedido.jsp").forward(request, response);
 
+    }
+    protected void buscar(HttpServletRequest request, HttpServletResponse response) 
+                    throws ServletException, IOException 
+    {
+        //Se obtiene los parametros
+        String id = request.getParameter("id");
+        String dato = request.getParameter("txtBuscar");
+        //Se inserta a la BD el cursos
+        if(dato==""){
+            List<Producto> info = new ModeloProducto().listarProducto(Integer.parseInt(id));
+            List<Calificacion> info2=new ModeloCalificacion().listarCalificacion(Integer.parseInt(id));
+            //Se almacena en memoria llamada request
+            request.setAttribute("data",info);
+            request.setAttribute("data2",info2);
+            //Se reenvia el request(con los datos) al jsp listaCursos.jsp
+            request.getRequestDispatcher("/catalogo.jsp").forward(request, response);
+        }else{
+            List<Producto> info = new ModeloProducto().buscar(Integer.parseInt(id),dato);
+            List<Calificacion> info2=new ModeloCalificacion().listarCalificacion(Integer.parseInt(id));
+            //Se almacena en memoria llamada request
+            request.setAttribute("data",info);
+            //Se reenvia el request(con los datos) al jsp listaCursos.jsp
+            request.getRequestDispatcher("/catalogo.jsp").forward(request, response);
+        }
     }
     protected void actualizaDetalleProducto(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException
