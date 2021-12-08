@@ -4,6 +4,7 @@
     Author     : edicz
 --%>
 
+<%@page import="java.util.Collections"%>
 <%@page import="Entidad.Pedido"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -40,7 +41,7 @@
                 </div>
                 <div class="col-9 card">
                     <div class="text-center card-header">
-                        <h1>Carrito de Compras</h1>
+                        <h1>Historial de Compras</h1>
                     </div>
                     <div class="row">
                         <div class="col-sm card-body">
@@ -60,6 +61,7 @@
                                     <%
                                 if(da!=null)
                                 {
+                                    Collections.reverse(da);
                                     for(Pedido a:da)
                                     {
                                 %>
@@ -67,20 +69,24 @@
                                         <td><%=a.getIdPedido()%></td>
                                         <td><%=a.getFechaPedido()%></td>
                                         <td><%=a.getTotalPrecio()%></td>
-                                        <%if(a.getIdEstadoPedido()==1){%>
-                                            <td>Preparando Entrega  </td>
-                                        <%}%>
+                                        <td><%if(a.getIdEstadoPedido()==1){%>
+                                            Preparando Entrega  
+                                        <%  }else if (a.getIdEstadoPedido()==2){%>
+                                            Cancelado
+                                        <%  }else{%>
+                                            Enviado
+                                        <%  }%></td>
                                         <td><%=a.getDireccionPedido()%></td>
-                                        <%if(a.getIdPago()==1){%>
-                                            <td>Efectivo</td>
+                                        <td><%if(a.getIdPago()==1){%>
+                                            Efectivo
                                         <%}else{%>
-                                            <td>Tarjeta</td>
-                                        <%}%>
+                                            Tarjeta
+                                        <%}%></td>
                                         <td><a href="ServletProducto?tipo=listarDetallePedido&id=<%=a.getIdPedido()%>"  class="btn btn-outline-info my-2 my-sm-0 form-control">Detalles</a></td>
                                     </tr>
                                 <%
-                                        }
                                     }
+                                }
                                 %>
                                 </tbody>
                             </table>

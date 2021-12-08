@@ -38,10 +38,10 @@
                         <table border="1" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>CANTIDAD</th>
-                                <th>PRECIO</th>
-                                <th>MARCA</th>
+                                <th>NOMBRE</th>
                                 <th>IMAGEN</th>
+                                <th>CANTIDA</th>
+                                <th>PRECIO</th>
                                 <th>ACCION</th>
                         </thead>
                         <tbody>
@@ -55,14 +55,14 @@
                             <input type="hidden" name="tipo" value="actualizaDetalleProducto">    
                             <tr>
                                 <input style="display: none" type="number" name="id" required class="form-control" value="<%=a.getIdDetallePedido()%>">
-                                <td><input type="number" id="cantidad" name="cantidad" required class="form-control" value="<%=a.getCantida()%>"></td>
-                                <td><input type="text" id="precio" readonly="" name="precio" required class="form-control" value="<%=a.getCantida()*a.getPrecioProducto()%>"></td>
+                                <td><%=a.getNombreProducto()%></td>
+                                <td><img src="<%=a.getImgProducto()%>" width="50" height="50"></td>
                                 <script>
                                     var s=document.getElementById("cantidad").value;
                                     document.getElementById("precio").value =(<%=a.getPrecioProducto()%>*s);
                                 </script>
-                                <td><%=a.getNombreProducto()%></td>
-                                <td><img src="<%=a.getImgProducto()%>" width="50" height="50"></td>
+                                <td><input type="number" id="cantidad" name="cantidad" required class="form-control" value="<%=a.getCantida()%>"></td>
+                                <td><input type="text" id="precio" readonly="" name="precio" required class="form-control" value="<%=a.getCantida()*a.getPrecioProducto()%>"></td>
                                 <td><a href="ServletProducto?tipo=eliminarDetallePedido&id=<%=a.getIdDetallePedido()%>" class="btn btn-outline-info my-2 my-sm-0 form-control">Eliminar</a>
                                 <input type="submit" value="Actualizar" class="btn btn-outline-info my-2 my-sm-0 form-control"></td>
                             </tr>
@@ -73,7 +73,6 @@
                         %>
                         </tbody>
                     </table>
-                    <a href="javascript: history.go(-1)"  class="btn btn-outline-info my-2 my-sm-0 form-control">Mostrar Pedidos</a>
                         <%
                         if(da!=null)
                         {
@@ -89,13 +88,15 @@
                                 <input type="text" name ="txtparametro" style="display:none" value="<%=a.getIdPedido()%>"/>
                                 <input type="text" name ="total" style="display:none" value="<%=total%>"/>
                                 <input type="text" name ="titulo" style="display:none" value="<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>"/>
-                                <input type="submit" value="Ver Boleta" class="btn btn-outline-info my-2 my-sm-0 form-control"/>
+                                <input type="text" name ="correoDestino" style="display:none" value="ediczon.mayta@gmail.com"/>
+                                <input type="text" name ="tienda" style="display:none" value="<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>"/>
+                                <input type="submit" value="Notificar" class="btn btn-outline-info my-2 my-sm-0 form-control"/>
                             </form>
-                            <a href="ServletProducto?tipo=EnviarMail&correo=ediczon.mayta@gmail.com&tienda=<jsp:getProperty name="tiendaBean" property ="nombreTienda"/>" class="btn btn-outline-info">Notificar</a>
                         <%break;
                             }
                         }
                         %>
+                        <a href="javascript: history.go(-1)"  class="btn btn-outline-info my-2 my-sm-0 form-control">Regresar</a>
                 </div><br><br>
                 
             </div>

@@ -32,7 +32,7 @@
                     <br>
                     <a class="btn btn-info mr-2" href="ServletProducto?tipo=listarProducto&id=<jsp:getProperty name="tiendaBean" property ="idTienda"/>">Productos</a>
                     <br>
-                    <a class="btn btn-info mr-2" href="productos.jsp">Reportes</a>
+                    <a class="btn btn-info mr-2" href="ServletProducto?tipo=listarReporte&id=<jsp:getProperty name="tiendaBean" property ="idTienda"/>"">Reportes</a>
                     <br>
                     <a class="btn btn-info mr-2" href="ServletProducto?tipo=listarPedidoClienteTienda&id=<jsp:getProperty name="tiendaBean" property ="idTienda"/>">Pedidos</a>
                     <br>

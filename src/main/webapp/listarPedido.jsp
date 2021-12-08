@@ -1,5 +1,6 @@
 
 
+<%@page import="java.util.Collections"%>
 <%@page import="Entidad.Pedido"%>
 <%-- 
     Document   : listarPe
@@ -52,29 +53,34 @@
                             <%
                         if(da!=null)
                         {
+                            Collections.reverse(da);
                             for(Pedido a:da)
                             {
-                        %>
+                                if(a.getIdEstadoPedido()==1)
+                                {
+                            %>
                             <tr>
                                 <td><%=a.getFechaPedido()%></td>
                                 <td><%=a.getTotalPrecio()%></td>
-                                <%if(a.getIdEstadoPedido()==1){%>
-                                    <td>Preparando Entrega  </td>
-                                <%}%>
-                                <%if(a.getIdPago()==1){%>
-                                    <td>Efectivo</td>
-                                <%}else{%>
-                                    <td>Tarjeta</td>
-                                <%}%>
+                                <td><%if(a.getIdEstadoPedido()==1)
+                                    {%>
+                                    Preparando Entrega  
+                                <%  }%></td>
+                                <td><%if(a.getIdPago()==1){%>
+                                    Efectivo
+                                <%  }else{%>
+                                    Tarjeta
+                                <%  }%></td>
                                 <td><%=a.getDireccionPedido()%></td>
                                 <td><%=a.getHoraEntrega()%></td>
                                 <td><%=a.getFechaEntrega()%></td>
                                 <td><a href="ServletProducto?tipo=listarDetallePedidoTienda&id=<%=a.getIdPedido()%>"  class="btn btn-outline-info">Detalles</a>
                                     <a href="ServletProducto?tipo=buscarPedido&id=<%=a.getIdPedido()%>" class="btn btn-outline-info">Atender</a></td>
                             </tr>
-                        <%
-                                }
+                            <%
+                                }   
                             }
+                        }
                         %>
                         </tbody>
                     </table>

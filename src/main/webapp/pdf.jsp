@@ -1,3 +1,14 @@
+<%@page import="javax.mail.Transport"%>
+<%@page import="javax.mail.Message"%>
+<%@page import="javax.mail.internet.InternetAddress"%>
+<%@page import="javax.mail.internet.MimeMessage"%>
+<%@page import="javax.mail.internet.MimeMultipart"%>
+<%@page import="javax.activation.FileDataSource"%>
+<%@page import="javax.activation.DataHandler"%>
+<%@page import="javax.mail.internet.MimeBodyPart"%>
+<%@page import="javax.mail.BodyPart"%>
+<%@page import="javax.mail.BodyPart"%>
+<%@page import="javax.mail.Session"%>
 <%@page import="net.sf.jasperreports.engine.util.JRLoader"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="Utils.MysqlDBConexion"%>
@@ -67,6 +78,43 @@
             outputstream.flush();
             outputstream.close();
             
+            String correo ="ediczon.mayta@gmail.com";
+            String contra="usfptazwtimsvgfl";
+
+            String correoDestino= request.getParameter("correoDestino");;
+
+            Properties p = new Properties();
+            p.put("mail.smtp.host", "smtp.gmail.com");
+            p.setProperty("mail.smtp.starttls.enable", "true");
+            p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            p.setProperty("mail.smtp.port", "587");
+            p.setProperty("mail.smtp.user",correo);
+            p.setProperty("mail.smtp.auth", "true");
+            Session s = Session.getDefaultInstance(p);
+            BodyPart texto = new MimeBodyPart();
+            texto.setText("Recibo de Compra");
+            BodyPart adjunto = new MimeBodyPart();
+
+            adjunto.setDataHandler(new DataHandler(new FileDataSource("D:/reporte.pdf")));
+            adjunto.setFileName("reporte.pdf");
+            MimeMultipart m = new MimeMultipart();
+            m.addBodyPart(texto);
+            m.addBodyPart(adjunto);
+
+            MimeMessage mensaje = new MimeMessage(s);
+            mensaje.setFrom(new InternetAddress(correo));
+            mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDestino));
+
+            String tienda = request.getParameter("tienda");
+
+            mensaje.setSubject(tienda);
+            mensaje.setContent(m);
+
+            Transport t = s.getTransport("smtp");
+            t.connect(correo,contra);
+            t.sendMessage(mensaje, mensaje.getAllRecipients());
+            t.close();
+            System.out.println("Mensaje enviado");
         %>
     </body>
 </html>
