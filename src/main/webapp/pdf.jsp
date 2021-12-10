@@ -49,13 +49,15 @@
             
             String titulo = request.getParameter("titulo");
             parameter.put("titulo",new String(titulo));
-
-            byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, con);
-            
+            //GUARDAMOS EL REPORTE
+            byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, con);//MOSTRAR PDF
+            // SALIDA FORMATO PDF
             response.setContentType("application/pdf");
-            response.setContentLength(bytes.length);
             
+            response.setContentLength(bytes.length);
+            //SALIDA PARA EL REPORTE PDF
             ServletOutputStream outputstream = response.getOutputStream();
+            //DIBUJA EL REPORTE
             outputstream.write(bytes,0,bytes.length);
             
             JasperReport jasperReport;
@@ -74,7 +76,7 @@
             {
               System.err.println( "Error iReport: " + ex.getMessage() );
             }
-            
+            //LIMPIA Y CIERRA
             outputstream.flush();
             outputstream.close();
             
@@ -84,12 +86,18 @@
             String correoDestino= request.getParameter("correoDestino");;
 
             Properties p = new Properties();
+            // Nombre del host de correo, es smtp.gmail.com
             p.put("mail.smtp.host", "smtp.gmail.com");
+            // TLS si está disponible
             p.setProperty("mail.smtp.starttls.enable", "true");
+            
             p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            // Puerto de gmail para envio de correos
             p.setProperty("mail.smtp.port", "587");
+            // Nombre del usuario
             p.setProperty("mail.smtp.user",correo);
             p.setProperty("mail.smtp.auth", "true");
+            //obtener nuestra instancia de Session.
             Session s = Session.getDefaultInstance(p);
             BodyPart texto = new MimeBodyPart();
             texto.setText("Recibo de Compra");
@@ -100,9 +108,11 @@
             MimeMultipart m = new MimeMultipart();
             m.addBodyPart(texto);
             m.addBodyPart(adjunto);
-
+            //    
             MimeMessage mensaje = new MimeMessage(s);
+            // Quien envia el correo
             mensaje.setFrom(new InternetAddress(correo));
+            // A quien va dirigido
             mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDestino));
 
             String tienda = request.getParameter("tienda");
@@ -111,7 +121,9 @@
             mensaje.setContent(m);
 
             Transport t = s.getTransport("smtp");
+            //ESTABLECEMOS LA CONEXION, dado de usuario y pass
             t.connect(correo,contra);
+            //enviamos el mesaje
             t.sendMessage(mensaje, mensaje.getAllRecipients());
             t.close();
             System.out.println("Mensaje enviado");

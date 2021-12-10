@@ -67,7 +67,6 @@
                                 </div>
                                 
                                 <script>
-                                    
                                     function initMap()
                                     {
                                         var mapa = new google.maps.Map(document.getElementById('mapa'),
@@ -111,8 +110,7 @@
                                         <%
                                                 }
                                             }
-                                        %>    
-                                                                              
+                                        %>                                    
                                     }
                                 </script>
                                 <div>

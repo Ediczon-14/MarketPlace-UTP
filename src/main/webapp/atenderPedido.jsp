@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%   Pedido a = (Pedido) request.getAttribute("data"); %>
+            <%   Pedido a = (Pedido) request.getAttribute("data"); %>
         <%@include file="/header.jsp"%>
         <br> 
         <br>
